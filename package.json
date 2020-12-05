@@ -1,0 +1,21 @@
+{
+  "type": "module",
+  "private": true,
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "build:client": "yarn workspace run-from-server-client build",
+    "dev": "yarn workspace post-objection-knex-clinic-server dev",
+    "dev:debug": "yarn workspace post-objection-knex-clinic-server dev:debug",
+    "dev:server:debug": "PORT=4000 yarn workspace post-objection-knex-clinic-server dev:debug",
+    "dev:server": "PORT=4000 yarn workspace post-objection-knex-clinic-server dev",
+    "dev:client": "yarn workspace post-objection-knex-clinic-client dev",
+    "heroku-postbuild": "yarn workspace post-objection-knex-clinic-client build",
+    "start": "yarn workspace post-objection-knex-clinic-server start"
+  },
+  "engines": {
+    "node": "~14.8"
+  }
+}
