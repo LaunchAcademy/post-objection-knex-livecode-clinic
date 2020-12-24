@@ -15,7 +15,6 @@ boardGamesRouter.get("/:id", async (req, res) => {
 })
 
 boardGamesRouter.post("/", async (req, res) => {
-  // debugger
   const newGame = await BoardGame.query().insertAndFetch(req.body)
   return res.set({ "Content-Type": "application/json"}).json(newGame)
 })
