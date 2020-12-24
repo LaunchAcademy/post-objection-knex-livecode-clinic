@@ -8,7 +8,7 @@ We will work off of the completed code from `intro-objection-knex-livecode-clini
 
 The necessary React components are provided so we can focus on the back-end router responsible for receiving POST request for a new board game.
 
-The new board game form is on its own page, so after the form is submitted we will have to `Redirect` the user 
+The new board game form is on its' own page, so after the form is submitted we will have to `Redirect` the user 
 
 ### Goals
 
