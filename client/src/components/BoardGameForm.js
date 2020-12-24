@@ -1,6 +1,9 @@
 import React, { useState } from "react"
 import { Link, Redirect } from "react-router-dom"
 
+import ErrorList from "./ErrorList"
+import translateServerErrors from "../services/translateServerErrors"
+
 const BoardGameForm = (props) => {
   const [newGame, setNewGame] = useState({
     title: "",
@@ -12,6 +15,7 @@ const BoardGameForm = (props) => {
     status: false,
     redirectId: ""
   })
+  const [errors, setErrors] = useState([])
 
   const handleInputChange = (event) => {
     setNewGame({
@@ -48,12 +52,18 @@ const BoardGameForm = (props) => {
         throw(error)
       } else {
         const responseBody = await response.json()
-        // debugger
-        const newGameId = responseBody.id
-        setRedirect({
-          status: true,
-          redirectId: newGameId
-        })
+        if (responseBody.errors) {
+          debugger
+          const serverErrors = translateServerErrors(responseBody.errors)
+          debugger
+          setErrors(serverErrors)
+        } else {
+          const newGameId = responseBody.id
+          setRedirect({
+            status: true,
+            redirectId: newGameId
+          })
+        }
       }
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`)
@@ -73,8 +83,10 @@ const BoardGameForm = (props) => {
       </Link>
 
       <h1>New Board Game Form</h1>
-
+      
       <form onSubmit={handleSubmit}>
+        <ErrorList errors={errors} />
+      
         <label>
           Title:
           <input
