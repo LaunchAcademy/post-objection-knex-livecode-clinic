@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Redirect } from "react-router-dom"
+import { Link, Redirect } from "react-router-dom"
 
 const BoardGameForm = (props) => {
   const [newGame, setNewGame] = useState({
@@ -8,10 +8,10 @@ const BoardGameForm = (props) => {
     maximumAmountOfPlayers: "",
     description: ""
   })
-  // const [redirect, setRedirect] = useState({
-  //   status: false,
-  //   redirectId: ""
-  // })
+  const [redirect, setRedirect] = useState({
+    status: false,
+    redirectId: ""
+  })
 
   const handleInputChange = (event) => {
     setNewGame({
@@ -48,21 +48,30 @@ const BoardGameForm = (props) => {
         throw(error)
       } else {
         const responseBody = await response.json()
-        // do something after the form is submitted
+        // debugger
+        const newGameId = responseBody.id
+        setRedirect({
+          status: true,
+          redirectId: newGameId
+        })
       }
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`)
     }
   }
 
-  // if (redirect.status === true) {
-  //   return(
-  //     <Redirect to={`/boardgames/${redirect.redirectId}`} />
-  //   )
-  // }
+  if (redirect.status === true) {
+    return(
+      <Redirect to={`/boardgames/${redirect.redirectId}`} />
+    )
+  }
 
   return (
     <div className="callout">
+      <Link to="/boardgames">
+        <h3>Back to All Games</h3>
+      </Link>
+
       <h1>New Board Game Form</h1>
 
       <form onSubmit={handleSubmit}>

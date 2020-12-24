@@ -1,9 +1,9 @@
 const Model = require("./Model")
 
-class Boardgame extends Model {
+class BoardGame extends Model {
   static get tableName() {
     return "boardgames"
   }
 }
 
-module.exports = Boardgame
+module.exports = BoardGame
