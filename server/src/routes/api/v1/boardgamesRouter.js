@@ -1,17 +1,17 @@
 import express from "express"
 
-import Boardgame from "../../../models/Boardgame.js"
+import BoardGame from "../../../models/BoardGame.js"
 
-const boardgamesRouter = new express.Router()
+const boardGamesRouter = new express.Router()
 
-boardgamesRouter.get("/", async (req, res) => {
-  const boardgames = await Boardgame.query()
-  return res.set({ "Content-Type": "application/json" }).json(boardgames)
+boardGamesRouter.get("/", async (req, res) => {
+  const boardGames = await BoardGame.query()
+  return res.set({ "Content-Type": "application/json" }).json(boardGames)
 })
 
-boardgamesRouter.get("/:id", async (req, res) => {
-  const boardgame = await Boardgame.query().findById(req.params.id)
-  return res.set({ "Content-Type": "application/json" }).json(boardgame)
+boardGamesRouter.get("/:id", async (req, res) => {
+  const boardGame = await BoardGame.query().findById(req.params.id)
+  return res.set({ "Content-Type": "application/json" }).json(boardGame)
 })
 
-export default boardgamesRouter
+export default boardGamesRouter

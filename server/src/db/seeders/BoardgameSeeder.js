@@ -1,7 +1,7 @@
 /* eslint-disable no-await-in-loop, no-restricted-syntax */
-import Boardgame from "../../models/Boardgame.js"
+import BoardGame from "../../models/BoardGame.js"
 
-class BoardgameSeeder {
+class BoardGameSeeder {
   static async seed() {
     const gamesData = [
       {
@@ -19,12 +19,12 @@ class BoardgameSeeder {
     ]
 
     for (const singleGameData of gamesData) {
-      const currentGame = await Boardgame.query().findOne({ title: singleGameData.title })
+      const currentGame = await BoardGame.query().findOne({ title: singleGameData.title })
       if (!currentGame) {
-        await Boardgame.query().insert(singleGameData)
+        await BoardGame.query().insert(singleGameData)
       }
     }
   }
 }
 
-export default BoardgameSeeder
+export default BoardGameSeeder

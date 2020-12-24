@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
 import { connection } from "../boot.js"
 import configuration from "../config.js"
-import BoardgameSeeder from "./seeders/BoardgameSeeder.js"
+import BoardGameSeeder from "./seeders/BoardGameSeeder.js"
 
 class Seeder {
   static async seed() {
     console.log("seeding boardgames")
-    await BoardgameSeeder.seed()
+    await BoardGameSeeder.seed()
 
     console.log("Done!")
     await connection.destroy()
