@@ -20,7 +20,7 @@ boardGamesRouter.post("/", async (req, res) => {
   if (validatedGame) {
     // debugger
     const newGame = await BoardGame.query().insertAndFetch(req.body)
-    return res.set({ "Content-Type": "application/json"}).json(newGame)
+    return res.set({ "Content-Type": "application/json" }).json(newGame)
   } else {
     // debugger
     let errorMessages = []
@@ -28,7 +28,7 @@ boardGamesRouter.post("/", async (req, res) => {
       debugger
       errorMessages = err.errors
     })
-    return res.set({ "Content-Type": "application/json"}).json({ errors: errorMessages })
+    return res.set({ "Content-Type": "application/json" }).json({ errors: errorMessages })
     // return res.status(422).json({ errors: errorMessages })
   }
   // await BoardGame.schema.validate(newGame, { abortEarly: false }).catch((err) => { console.error(err.errors) })
