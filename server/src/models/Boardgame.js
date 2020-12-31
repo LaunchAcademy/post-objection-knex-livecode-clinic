@@ -12,7 +12,7 @@ class BoardGame extends Model {
       properties: {
         title: { 
           "type": "string", 
-          "minLength": 1 
+          "minLength": 1
         },
         minimumAmountOfPlayers: { "type": ["integer", "string"] },
         maximumAmountOfPlayers: { "type": ["integer", "string"] },

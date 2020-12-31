@@ -21,7 +21,7 @@ const BoardGamesIndex = (props) => {
       console.error(err)
     }
   }
-
+  
   useEffect(() => {
     getGames()
   }, [])
