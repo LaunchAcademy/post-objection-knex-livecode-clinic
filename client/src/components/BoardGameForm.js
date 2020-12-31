@@ -8,10 +8,7 @@ const BoardGameForm = (props) => {
     maximumAmountOfPlayers: "",
     description: ""
   })
-  const [redirect, setRedirect] = useState({
-    status: false,
-    redirectId: ""
-  })
+  const [redirect, setRedirect] = useState(false)
 
   const handleInputChange = (event) => {
     setNewGame({
@@ -37,6 +34,7 @@ const BoardGameForm = (props) => {
     try {
       const response = await fetch("/api/v1/boardgames", {
         method: "POST",
+        credentials: "same-origin",
         headers: new Headers({
           "Content-Type": "application/json"
         }),
@@ -48,21 +46,18 @@ const BoardGameForm = (props) => {
         throw(error)
       } else {
         const responseBody = await response.json()
-        // debugger
-        const newGameId = responseBody.id
-        setRedirect({
-          status: true,
-          redirectId: newGameId
-        })
+        if (responseBody.boardGame) {
+          setRedirect(true)
+        }
       }
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`)
     }
   }
 
-  if (redirect.status === true) {
+  if (redirect === true) {
     return(
-      <Redirect to={`/boardgames/${redirect.redirectId}`} />
+      <Redirect to="/boardgames" />
     )
   }
 
