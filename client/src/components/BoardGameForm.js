@@ -33,6 +33,7 @@ const BoardGameForm = (props) => {
     try {
       const response = await fetch("/api/v1/boardgames", {
         method: "POST",
+        credentials: "same-origin",
         headers: new Headers({
           "Content-Type": "application/json"
         }),

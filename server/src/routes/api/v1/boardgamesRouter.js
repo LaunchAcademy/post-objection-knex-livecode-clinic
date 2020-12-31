@@ -5,13 +5,21 @@ import BoardGame from "../../../models/BoardGame.js"
 const boardGamesRouter = new express.Router()
 
 boardGamesRouter.get("/", async (req, res) => {
-  const boardGames = await BoardGame.query()
-  return res.set({ "Content-Type": "application/json" }).json(boardGames)
+  try {
+    const boardGames = await BoardGame.query()
+    return res.status(200).json({ boardGames: boardGames})
+  } catch(err) {
+    return res.status(422).json({ errors: err })
+  }
 })
 
 boardGamesRouter.get("/:id", async (req, res) => {
-  const boardGame = await BoardGame.query().findById(req.params.id)
-  return res.set({ "Content-Type": "application/json" }).json(boardGame)
+  try {
+    const boardGame = await BoardGame.query().findById(req.params.id)
+    return res.status(200).json({ boardGame: boardGame })
+  } catch(err) {
+    return res.status(422).json({ errors: err })
+  }
 })
 
 export default boardGamesRouter
