@@ -1,18 +1,21 @@
 const Model = require("./Model")
-const { object, string, number, boolean } = require("yup")
 
 class BoardGame extends Model {
   static get tableName() {
     return "boardgames"
   }
 
-  static get schema() {
-    return object().shape({
-      title: string().required(),
-      minimumAmountOfPlayers: number().required().positive().integer(),
-      maximumAmountOfPlayers: number().required().positive().integer(),
-      description: string()
-    })
+  static get jsonSchema() {
+    return  {
+      type: "object",
+      required: ["title", "minimumAmountOfPlayers", "maximumAmountOfPlayers"],
+      properties: {
+        title: { type: "string" },
+        minimumAmountOfPlayers: { type: ["integer", "string"] },
+        maximumAmountOfPlayers: { type: ["integer", "string"] },
+        description: { type: "string" }
+      }
+    }
   }
 }
 

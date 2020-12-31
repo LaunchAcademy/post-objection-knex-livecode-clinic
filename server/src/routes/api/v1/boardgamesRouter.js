@@ -1,37 +1,44 @@
 import express from "express"
+import objection from "objection"
+const { ValidationError } = objection
 
 import BoardGame from "../../../models/BoardGame.js"
+import cleanUserInput from "../../../services/cleanUserInput.js"
 
 const boardGamesRouter = new express.Router()
 
 boardGamesRouter.get("/", async (req, res) => {
-  const boardGames = await BoardGame.query()
-  return res.set({ "Content-Type": "application/json" }).json(boardGames)
+  try {
+    const boardGames = await BoardGame.query()
+    return res.status(200).json({ boardGames: boardGames})
+  } catch(err) {
+    return res.status(422).json({ errors: err })
+  }
 })
 
 boardGamesRouter.get("/:id", async (req, res) => {
-  const boardGame = await BoardGame.query().findById(req.params.id)
-  return res.set({ "Content-Type": "application/json" }).json(boardGame)
+  try {
+    const boardGame = await BoardGame.query().findById(req.params.id)
+    return res.status(200).json({ boardGame: boardGame })
+  } catch(err) {
+    return res.status(422).json({ errors: err })
+  }
 })
 
 boardGamesRouter.post("/", async (req, res) => {
-  let validatedGame = await BoardGame.schema.isValid(req.body)
-  // debugger
-  if (validatedGame) {
-    // debugger
-    const newGame = await BoardGame.query().insertAndFetch(req.body)
-    return res.set({ "Content-Type": "application/json" }).json(newGame)
-  } else {
-    // debugger
-    let errorMessages = []
-    await BoardGame.schema.validate(req.body, { abortEarly: false }).catch((err) => { 
-      debugger
-      errorMessages = err.errors
-    })
-    return res.set({ "Content-Type": "application/json" }).json({ errors: errorMessages })
-    // return res.status(422).json({ errors: errorMessages })
+  const body = req.body
+  const formInput = cleanUserInput(body)
+  
+  try {
+    const newGame = await BoardGame.query().insertAndFetch(formInput)
+    return res.status(200).json({ boardGame: newGame })
+  } catch(err) {
+    if (err instanceof ValidationError) {
+      return res.status(422).json({ errors: err.data })
+    }
+    return res.status(500).json({ errors: err })
   }
-  // await BoardGame.schema.validate(newGame, { abortEarly: false }).catch((err) => { console.error(err.errors) })
 })
+
 
 export default boardGamesRouter

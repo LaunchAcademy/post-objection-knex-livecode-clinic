@@ -15,7 +15,7 @@ const BoardGamesIndex = (props) => {
         throw error
       }
       const responseBody = await response.json()
-      setBoardGames(responseBody)
+      setBoardGames(responseBody.boardGames)
     } catch (err) {
       console.error("Error in fetch!")
       console.error(err)

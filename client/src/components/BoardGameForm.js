@@ -11,11 +11,8 @@ const BoardGameForm = (props) => {
     maximumAmountOfPlayers: "",
     description: ""
   })
-  const [redirect, setRedirect] = useState({
-    status: false,
-    redirectId: ""
-  })
-  const [errors, setErrors] = useState([])
+  const [redirect, setRedirect] = useState(false)
+  const [errors, setErrors] = useState({})
 
   const handleInputChange = (event) => {
     setNewGame({
@@ -41,28 +38,26 @@ const BoardGameForm = (props) => {
     try {
       const response = await fetch("/api/v1/boardgames", {
         method: "POST",
+        credentials: "same-origin",
         headers: new Headers({
           "Content-Type": "application/json"
         }),
         body: JSON.stringify(newGame)
       })
       if (!response.ok) {
-        const errorMessage = `${response.status} (${response.statusText})`
-        const error = new Error(errorMessage)
-        throw(error)
+        if (response.status == 422) {
+          const body = await response.json()
+          const newErrors = translateServerErrors(body.errors)
+          setErrors(newErrors)
+        } else {
+          const errorMessage = `${response.status} (${response.statusText})`
+          const error = new Error(errorMessage)
+          throw(error)
+        }
       } else {
         const responseBody = await response.json()
-        if (responseBody.errors) {
-          debugger
-          const serverErrors = translateServerErrors(responseBody.errors)
-          debugger
-          setErrors(serverErrors)
-        } else {
-          const newGameId = responseBody.id
-          setRedirect({
-            status: true,
-            redirectId: newGameId
-          })
+        if (responseBody.boardGame) {
+          setRedirect(true)
         }
       }
     } catch (error) {
@@ -70,9 +65,9 @@ const BoardGameForm = (props) => {
     }
   }
 
-  if (redirect.status === true) {
+  if (redirect === true) {
     return(
-      <Redirect to={`/boardgames/${redirect.redirectId}`} />
+      <Redirect to="/boardgames" />
     )
   }
 
