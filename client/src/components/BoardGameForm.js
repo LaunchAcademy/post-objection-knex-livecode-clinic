@@ -69,6 +69,10 @@ const BoardGameForm = (props) => {
 
       <h1>New Board Game Form</h1>
 
+      <Link to="/boardgames">
+        <h3>Back to All Games</h3>
+      </Link>
+
       <form onSubmit={handleSubmit}>
         <label>
           Title:

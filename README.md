@@ -14,3 +14,28 @@ The new board game form is on its' own page, so after the form is submitted we w
 
 - Create a new router endpoint for `POST`ing new board games
 - Successfully `Redirect` the user to the new board game show page after a form submission
+
+### Steps
+
+1. Review Provided React Components (including form)
+
+  - App = React router
+  - Index = fetch all games
+  - Show = fetch game
+  - ShowTile = display game
+  - Form = created with `handleSubmit`
+
+2. To Build:
+
+  - create router endpoint to POST to
+  - receive newGame response
+  - redirect to Index page
+
+3. If There's Time
+
+  - redirect to new show page
+  - add model level validations
+  - update Router to check if incoming request is valid
+  - if invalid send response with errors
+  - use ErrorList to display errors
+  - translate errors with `translateServerErrors`
