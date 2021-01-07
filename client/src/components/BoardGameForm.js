@@ -78,7 +78,15 @@ const BoardGameForm = (props) => {
       </Link>
 
       <h1>New Board Game Form</h1>
+<<<<<<< HEAD
       
+=======
+
+      <Link to="/boardgames">
+        <h3>Back to All Games</h3>
+      </Link>
+
+>>>>>>> a3e64db923817898cf312b39c657f059b401c993
       <form onSubmit={handleSubmit}>
         <ErrorList errors={errors} />
       
