@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import { Link, Redirect } from "react-router-dom"
 
 const BoardGameForm = (props) => {
   const [newGame, setNewGame] = useState({
@@ -8,8 +7,7 @@ const BoardGameForm = (props) => {
     maximumAmountOfPlayers: "",
     description: ""
   })
-  const [shouldRedirect, setShouldRedirect] = useState(false)
-
+  
   const handleInputChange = (event) => {
     setNewGame({
       ...newGame, 
@@ -31,43 +29,18 @@ const BoardGameForm = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault()
     // debugger
-    
-    try {
-      const response = await fetch("/api/v1/boardgames", {
-        method: "POST",
-        credentials: "same-origin",
-        headers: new Headers({
-          "Content-Type": "application/json"
-        }),
-        body: JSON.stringify(newGame)
-      })
-      if (!response.ok) {
-        const errorMessage = `${response.status} (${response.statusText})`
-        const error = new Error(errorMessage)
-        throw(error)
-      } else {
-        const responseBody = await response.json()
-        // debugger
-        if (responseBody.boardGame) {
-          setShouldRedirect(true)
-        }
-      }
-    } catch (error) {
-      console.error(`Error in fetch: ${error.message}`)
-    }
-  }
-
-  if (shouldRedirect) {
-    return <Redirect to="/boardgames" />
+    props.addNewBoardGame(newGame)
+    setNewGame({
+      title: "",
+      minimumAmountOfPlayers: "",
+      maximumAmountOfPlayers: "",
+      description: ""
+    })
   }
 
   return (
     <div className="callout">
       <h1>New Board Game Form</h1>
-
-      <Link to="/boardgames">
-        <h3>Back to All Games</h3>
-      </Link>
 
       <form onSubmit={handleSubmit}>
         <label>

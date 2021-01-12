@@ -14,7 +14,6 @@ const App = (props) => {
       <Switch>
         <Route exact path="/" component={BoardGamesIndex} />
         <Route exact path="/boardgames" component={BoardGamesIndex} />
-        <Route exact path="/boardgames/new" component={BoardGameForm} />
         <Route exact path="/boardgames/:id" component={BoardGamesShow} />
       </Switch>
     </BrowserRouter>
