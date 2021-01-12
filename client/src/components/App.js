@@ -3,7 +3,6 @@ import { Route, Switch, BrowserRouter } from "react-router-dom"
 import { hot } from "react-hot-loader/root"
 
 import BoardGamesIndex from "./BoardGamesIndex"
-import BoardGameForm from "./BoardGameForm"
 import BoardGamesShow from "./BoardGamesShow"
 
 import "../assets/scss/main.scss"
