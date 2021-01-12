@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, Redirect } from "react-router-dom"
 
 const BoardGameForm = (props) => {
   const [newGame, setNewGame] = useState({
@@ -8,6 +8,7 @@ const BoardGameForm = (props) => {
     maximumAmountOfPlayers: "",
     description: ""
   })
+  const [shouldRedirect, setShouldRedirect] = useState(false)
 
   const handleInputChange = (event) => {
     setNewGame({
@@ -29,6 +30,7 @@ const BoardGameForm = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+    // debugger
     
     try {
       const response = await fetch("/api/v1/boardgames", {
@@ -45,11 +47,18 @@ const BoardGameForm = (props) => {
         throw(error)
       } else {
         const responseBody = await response.json()
-        // do something after the form is submitted!
+        // debugger
+        if (responseBody.boardGame) {
+          setShouldRedirect(true)
+        }
       }
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`)
     }
+  }
+
+  if (shouldRedirect) {
+    return <Redirect to="/boardgames" />
   }
 
   return (

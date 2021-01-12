@@ -22,4 +22,16 @@ boardGamesRouter.get("/:id", async (req, res) => {
   }
 })
 
+boardGamesRouter.post("/", async (req, res) => {
+  const body = req.body
+  // const { body } = req
+  try {
+    const newBoardGame = await BoardGame.query().insertAndFetch(body)
+    // debugger
+    return res.status(201).json({ boardGame: newBoardGame })
+  } catch (error) {
+    return res.status(500).json({ errors: error })
+  }
+})
+
 export default boardGamesRouter
