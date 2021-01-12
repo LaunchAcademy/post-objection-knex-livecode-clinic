@@ -6,6 +6,13 @@ Now that our database is set up and we can see all of our board games, let's add
 
 We will work off of the completed code from `intro-objection-knex-livecode-clinic`, which already has the index and show pages built out.
 
+Drop and recreate the database for a fresh start:
+```
+dropdb boardgames_development
+createdb boardgames_development
+```
+Then `migrate`, `rollback`, and `migrate` as usual
+
 The necessary React components are provided so we can focus on the back-end router responsible for receiving POST request for a new board game.
 
 The new board game form is on its' own page, so after the form is submitted we will have to `Redirect` the user 
