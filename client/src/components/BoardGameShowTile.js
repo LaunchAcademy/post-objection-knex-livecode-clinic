@@ -7,7 +7,7 @@ const BoardGameShowTile = ({ boardGame }) => {
   if (!boardGame.description) {
     descriptionText = <i>No description provided</i>
   }
-
+  
   return (
     <div>
       <Link to="/boardgames">
