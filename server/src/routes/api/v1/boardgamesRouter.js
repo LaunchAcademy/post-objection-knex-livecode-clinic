@@ -1,6 +1,6 @@
 import express from "express"
 
-import BoardGame from "../../../models/BoardGame.js"
+import BoardGame from "../../../models/index.js"
 
 const boardGamesRouter = new express.Router()
 
